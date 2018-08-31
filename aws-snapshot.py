@@ -1,8 +1,15 @@
 import argparse
+import boto3
 
+
+def connectEc2(region):
+	client = boto3.client('ec2',region_name=region)
+	return client
 
 def listSnapshot(args):
-	print args.snapshot
+	client = boto3.client('ec2',region_name=args.region)
+	response = client.describe_snapshots(SnapshotIds=[args.snapshot])
+	print response
 
 def shareSnapshot(args):
 	print args.snapshot
